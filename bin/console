@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "s3/photos"
+
+s3 = Aws::S3::Resource.new
+BUCKET = s3.bucket(ENV['AWS_BUCKET'])
+
+require "irb"
+IRB.start
