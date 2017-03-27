@@ -1,2 +1,24 @@
-- @bucket.objects.each do |object|
-  p= object.key
+html
+  head
+    link rel="stylesheet" type="text/css" href="/bootstrap.min.css"
+
+  body
+    .row
+      .col-sm-3
+        ul.list-group style="max-height: 100%; overflow-y: auto;"
+          - objects(true).each do |object|
+            a.list-group-item href="/?marker=#{object.key}"= object.key
+
+      .col-sm-9
+        table width="100%" cellspacing=0 cellpadding=0
+          - objects.each_slice(4) do |row|
+            tr
+              - row.each do |object|
+                td
+                  figure
+                    img data-src=image_url(object)
+                    figcaption=object.key
+
+        a href="/?marker=#{objects.last.key}" Next &rarr;
+
+    script src="/script.js" type="text/javascript"
