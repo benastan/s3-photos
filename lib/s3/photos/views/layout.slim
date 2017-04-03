@@ -1,0 +1,36 @@
+- if request.xhr?
+  == yield
+- else
+  html
+    head
+      link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css"
+
+    body
+      .row
+        .col-xs-3
+          ul.list-group style="max-height: 100%; overflow-y: auto;"
+            - storage.objects(all: true).each do |object|
+              a.list-group-item href="javascript:void(0)" data-load="/?marker=#{object.key}"
+                = object.key
+
+        .col-xs-9#content style="max-height: 100%; overflow-y: auto;"
+          == yield
+
+
+      .modal#modal role="dialog"
+        .modal-dialog role="document"
+          .modal-content role="document"
+            .modal-header
+              button#closeModal type="button" class="close" aria-label="Close"
+                span aria-hidden="true" &times;
+              h4#modalTitle class="modal-title"
+
+            .modal-body
+              img#modalImage style="width: 100%; height: auto;"
+
+            .modal-footer
+              a#modalPopoutImage target="_BLANK"
+                i.glyphicon.glyphicon-new-window
+                ' &nbsp;View Image
+
+      script src="/script.js" type="text/javascript"
